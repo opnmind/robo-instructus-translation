@@ -3,26 +3,26 @@
 #!unlock type{primer} id{loops}
 # Loops
 
-`loop` is used to repeat commands. It will repeat the commands in its scope forever. A loop's scope is the commands indented that come after a `loop` line.
+`loop` wird benutzt um Befehle zu wiederholen. Die Befehle werden innerhalb des Gültigkeitsbereiches unendlich oft wiederholt. Ein `loop` Gültigkeitsbereich wird festgelegt durch die Einrückung nach der `loop` Zeile.
 
 ```max_run=11
-robo_forward()  # called once
+robo_forward()  # einmalig aufgerufen
 
 loop
     robo_forward()
     robo_left()
 
-robo_left()  # never called
+robo_left()  # niemals aufgerufen
 ```
 
 
 #!unlock type{primer} id{comments}
 # Comments
 
-Text after a '`#`' symbol will not be used as code, these are just comments used to make notes.
+Text nach dem '`#`' Symbol wird nicht als Code anerkannt, sondern als Kommentar zur Beschreibung von Codestellen.
 
 ```no_run
-robo_left()  # I think I'm starting to get this
+robo_left()  # Ich denke, ich fange an, dieses Kommando zu verstehen.
 ```
 
 
