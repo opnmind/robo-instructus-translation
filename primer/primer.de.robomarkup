@@ -29,15 +29,15 @@ robo_left()  # Ich denke, ich fange an, dieses Kommando zu verstehen.
 #!unlock type{primer} id{conditionals}
 # Conditionals
 
-`if` can be used to execute commands, or not, based on a condition.
+`if` kann verwendet werden zur Ausführung von Befehlen, oder auch nicht, basierend auf einer Bedingung.
 
 ```
 if robo_scan() is 1
-    # a tile is in front
+    # eine Kachel ist in Scanrichtung
     robo_forward()
 
 if robo_scan() is -1
-    # no tile is in front
+    # keine Kachel ist in Scanrichtung
     robo_left()
 ```
 
@@ -45,39 +45,41 @@ if robo_scan() is -1
 #!unlock type{primer} id{variables}
 # Variables
 
-You can save a number for use later in a `var`.
+Du kannst eine Nummer in einer Variablen `var` speichern und sie später verwenden.
 
 ```
-# save a function result into a variable 'scan'
+# Speichere ein Ergebnis eines Funktionsaufrufes in einer Variablen 'scan'.
 var scan = robo_scan()
 
-# use & re-use the saved variable in conditions
+# Verwende gespeicherte Variablen z. B. in  Bedingungen von Kontrollstrukturen.
 if scan is 1
     robo_forward()
 if scan is -1
     robo_left()
 ```
-This can be used to avoid having to call a slow function multiple times just to check the same result. It can also allow saving a result for use much later.
+Dies kann verwendet werden um mehrfach langsame Funktionsaufrufe zu vermeiden und dennoch das Ergebnis auf verschiedene Werte zu prüfen. Es erlaubt ebenso ein gespeicherte Ergebnis erst später zu verwenden.
+
 
 #!unlock type{primer} id{conditionals-2}
 # Conditions II
 
-'`if expr`' simply checks if `expr` is non-zero. So `0` is interpreted as "false" while `1` or any other non-zero is "true". When `expr` is interpreted as "true" the indented commands will run.
+'`if expr`' überprüft einfach ob `expr` nicht Null ist. `0` wird interpretiert als "false" während `1` oder jeder andere positive Nicht-Null-Wert "true" ist. Wenn `expr` interpretiert wird als "true" dann wird der zugehörige eingerückte Befehl ausgeführt,
 
 ```
 if 0
-    robo_left()  # not called
+    robo_left()  # wird nicht aufgerufen
 
 if 1
-    robo_forward()  # called
+    robo_forward()  # wird aufgerufen
 ```
 
+
 #!unlock type{primer} id{is}
-The keyword `is` compares two values producing `1` (true) when the values are the same or `0` (false) otherwise. This works naturally with `if`.
+Das Schlüsselwort `is` vergleicht zwei Werte und wird zu `1` (true) wenn die Werte identisch sind oder  zu `0` (false) wenn nicht. Es kann mit `if` verwendet werden.
 
-`not` can also be used to convert a `0` to a `1`, or any non-zero to `0`.
+`not` kann benutzt werden um eine `0` in eine `1` zu konvertieren, oder auch sämtliche positive Nicht-Null-Werte in eine `0`.
 
-`not x is y ` may also be written ` x is not y ` producing `1` (true) when the values differ.
+`not x is y ` kann auch als ` x is not y ` ausgedrückt werden und ergibt `1` (true) wenn die Werte sich unterscheiden.
 
 ```
 var scan = robo_scan()
@@ -93,12 +95,12 @@ if scan is not 1
 #!unlock type{primer} id{comparison}
 # Comparison
 
-In addition to `is`, values can be compared with `>`, `>=`, `<`, `<=` operators.
+Zusätzlich zu `is`, können Werte verglichen werden mit `>`, `>=`, `<`, `<=` Operatoren.
 
-`    a > b  # a is greater than b`
-`    a >= b  # a is greater than or equal to b`
-`    a < b  # a is less than b`
-`    a <= b  # a is less than or equal to b`
+`    a > b  # a ist größer als b`
+`    a >= b  # a ist größer oder gleich b`
+`    a < b  # a ist kleiner als b`
+`    a <= b  # a ist kleiner oder gleich b`
 
 ```
 var scan = robo_scan()
@@ -112,9 +114,9 @@ if scan < 0
 #!unlock type{primer} id{conditionals-3}
 # Conditions III
 
-After an `if` you can use `else` to deal with the 'otherwise' cases more easily.
+Nach einem `if` kann ein `else` benutzt werden um alle übrigen Fälle abzufangen.
 
-An `else` block runs when the `if` above it doesn't.
+Ein `else` Block wird aufgerufen wenn die `if` Bedingung zuvor nicht zutreffend ist.
 
 ```
 var scan = robo_scan()
@@ -127,9 +129,9 @@ else
 
 #!unlock type{primer} id{else-if}
 
-Multiple `else if` can be chained together to deal with many possible exclusive cases.
+Mehrfache `else if` Bedingungen können aneinander gereiht werden um viele verschiedene Prüfungen durchzuführen.
 
-This ensures only one indented block will be executed.
+Dies stellt sicher das nur ein eingerückter Block ausgeführt wird.
 
 ```
 var example = 14
@@ -145,40 +147,40 @@ else if example > 12
 else
     robo_left()
 ```
-An `else` section at the end will only run if each `if` and `else if` test above it fails.
+Der `else` Block am Ende wird nur ausgeführt wenn alle `if` und `else if` Prüfungen fehlschlugen. 
 
 
 #!unlock type{primer} id{scope}
 # Scope
 
-Indented code, like those that come after `loop` or `if` lines, represent "scope". A `var` can only be used in the scope it was declared in.
+Eingerückter Code, wie z. B. nach `loop` oder `if` Zeilen, stellt den "Scope" dar. Eine `var` kann nur innerhalb eines "Scope" benutzt werden wenn sie in ihm definiert wurde.
 ```no_run
 if scan is 1
     var foo = 123
-    if foo is 123  # works
+    if foo is 123  # funktioniert
         robo_left()
 
-if foo is 123  # fails! not available in this outer scope
+if foo is 123  # schlägt fehl! Nicht verfügbar außerhalb des Scopes.
     robo_left()
 ```
-To make a `var` more widely available it can be declared an outer scope. So, for example, top-level variables are accessible everywhere and will not be removed.
+Um eine Variable `var` erreichbar zu machen, muss sie außerhalb des Scops definiert werden. Z. B. Top-Level Variablen sind von überall aus zugreifbar und werden nicht gelöscht.
 ```no_run
 var foo
 if scan is 1
     foo = 123
-    if foo is 123  # works
+    if foo is 123  # funktioniert
         robo_left()
 
-if foo is 123  # works
+if foo is 123  # funktioniert
     robo_left()
 ```
-Variables are removed at the end of their scope, so `var` usage in a `loop` will result in a fresh variable for each iteration.
+Variablen werden gelöscht wenn der Scope beendet wird, wie die Benutzung von `var` in einem `loop`. Bei jeder Iteration wird die Variable neu zugewiesen. 
 
 
 #!unlock type{primer} id{loops-2}
 # Loops II
 
-The `continue` keyword can be used to restart a loop mid-way, while the `break` keyword can be used to exit the current loop.
+Das Schlüsselwort `continue` wird benutzt um den nächsten Schleifendurchlauf zu beginnen. Während das Schlüsselwort `break` dazu benutzt werden kann eine Schleife vorzeitig zu beenden.
 
 ```
 var count = 0
@@ -197,9 +199,9 @@ robo_left()
 #!unlock type{primer} id{loops-3}
 # Loops III
 
-Consider this use of `loop` that turns left 5 times.
+Beachte dieser `loop` dreht 5 mal nach links.
 ```
-# turn left 5 times
+# dreht 5 mal nach links
 var loop_count = 1
 loop
     if loop_count > 5
@@ -207,9 +209,9 @@ loop
     robo_left()
     loop_count = loop_count + 1
 ```
-While any kind of looping logic can be written with `loop`, keywords `for` & `while` are also available and can help create simpler code that achieves the same result.
+Während jede Art von Schleifenlogik geschrieben werden kann mit `loop`, Schlüsselwörter wie `for` & `while` sind ebenfalls verfügbar und können helfen, einfacheren Code zu erstellen, der das gleiche Ergebnis erzielt.
 ```
-# execute block until while condition is false
+# Führt den Block aus, außer die While-Bedingung trifft nicht mehr zu (false).
 var loop_count = 1
 while loop_count <= 5
     robo_left()
@@ -217,7 +219,7 @@ while loop_count <= 5
 ```
 
 ```
-# execute block with loop_count 1, 2, 3, 4 & 5
+# Führt den Block aus mit loop_count 1, 2, 3, 4 & 5
 for loop_count in 1,2,3,4,5
     robo_left()
 ```
